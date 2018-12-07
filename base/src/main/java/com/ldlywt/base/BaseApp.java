@@ -1,0 +1,22 @@
+package com.ldlywt.base;
+
+import android.app.Application;
+
+import com.blankj.utilcode.util.Utils;
+
+/**
+ * <pre>
+ *     author : wutao
+ *     e-mail : ldlywt@163.com
+ *     time   : 2018/12/07
+ *     desc   :
+ *     version: 1.0
+ * </pre>
+ */
+public class BaseApp extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Utils.init(this);
+    }
+}
