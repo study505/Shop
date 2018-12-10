@@ -14,6 +14,13 @@ import com.blankj.utilcode.util.Utils;
  * </pre>
  */
 public class BaseApp extends Application {
+
+    private static BaseApp sMBaseApp = null;
+
+    public static BaseApp getApp() {
+        return sMBaseApp;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
