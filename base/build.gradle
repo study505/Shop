@@ -17,11 +17,14 @@ android {
 }
 
 dependencies {
-    implementation var.dependencies.appcompat_v7
-    implementation var.dependencies.lifecycle_extensions
-    implementation var.dependencies.lifecycle_compiler
-    implementation var.dependencies.logger
-    implementation var.dependencies.utilcode
-    implementation var.dependencies.support_annotations
-
+    api var.dependencies.appcompat_v7
+    api var.dependencies.lifecycle_extensions
+    annotationProcessor var.dependencies.lifecycle_compiler
+    api var.dependencies.rxjava2
+    api var.dependencies.rxandroid
+    api var.dependencies.retrofit
+    api var.dependencies.converter_gson
+    api var.dependencies.adapter_rxjava
+    api var.dependencies.okhttp_log
+    api var.dependencies.utilcode
 }
