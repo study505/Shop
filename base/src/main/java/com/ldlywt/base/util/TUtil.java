@@ -6,6 +6,7 @@ import java.lang.reflect.ParameterizedType;
 
 
 public class TUtil {
+
     public static <T> T getNewInstance(Object object, int i) {
         if(object!=null){
             try {
@@ -25,6 +26,9 @@ public class TUtil {
 
     }
 
+    /**
+     * 获得超类的泛型参数的实际类型
+     */
     public static <T> T getInstance(Object object, int i) {
         if (object != null) {
             return (T) ((ParameterizedType) object.getClass()

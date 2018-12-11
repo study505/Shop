@@ -2,10 +2,10 @@ package com.ldlywt.fastdevandroid.main.vm;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
+
 import com.ldlywt.base.base.AbsViewModel;
-import com.ldlywt.fastdevandroid.main.common.DataRepository;
+import com.ldlywt.fastdevandroid.main.source.DataRepository;
 
 /**
  * <pre>

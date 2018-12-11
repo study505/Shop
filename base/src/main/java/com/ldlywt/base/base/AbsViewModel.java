@@ -3,6 +3,7 @@ package com.ldlywt.base.base;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.support.annotation.NonNull;
+
 import com.ldlywt.base.util.TUtil;
 
 
@@ -19,9 +20,6 @@ public class AbsViewModel<T extends AbsRepository> extends AndroidViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        if (mRepository != null) {
-            mRepository.unDisposable();
-        }
     }
 
 }

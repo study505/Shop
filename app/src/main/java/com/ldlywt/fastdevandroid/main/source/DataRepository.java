@@ -1,8 +1,12 @@
-package com.ldlywt.fastdevandroid.main.common;
+package com.ldlywt.fastdevandroid.main.source;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
+
+import com.ldlywt.base.base.AbsRepository;
+
 import java.io.IOException;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -16,7 +20,7 @@ import okhttp3.Response;
  *     desc   :
  * </pre>
  */
-public class DataRepository extends BaseRepository {
+public class DataRepository extends AbsRepository {
 
     String url = "http://www.wanandroid.com/banner/json";
 
@@ -38,7 +42,6 @@ public class DataRepository extends BaseRepository {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Log.d("wutao", "onResponse: " + response.body().string());
-//                sendData("wutao",response.body().string());
                 liveData.postValue(response.body().toString());
             }
         });
