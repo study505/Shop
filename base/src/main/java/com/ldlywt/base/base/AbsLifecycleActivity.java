@@ -19,15 +19,10 @@ public abstract class AbsLifecycleActivity<T extends AbsViewModel> extends BaseA
     @Override
     protected void initView() {
         mViewModel = VMProviders(this, (Class<T>) TUtil.getInstance(this, 0));
-        dataObserver();
     }
 
     protected <T extends ViewModel> T VMProviders(AppCompatActivity fragment, @NonNull Class modelClass) {
         return (T) ViewModelProviders.of(fragment).get(modelClass);
-
-    }
-
-    protected void dataObserver() {
 
     }
 

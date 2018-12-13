@@ -25,11 +25,13 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    api project(path: ':base')
+    implementation project(path: ':base')
     implementation var.dependencies.rxjava2
     implementation var.dependencies.rxandroid
     implementation var.dependencies.retrofit
     implementation var.dependencies.converter_gson
     implementation var.dependencies.adapter_rxjava
-    api var.dependencies.support_annotations
+    implementation var.dependencies.okhttp
+    implementation var.dependencies.okhttp_log
+    implementation var.dependencies.support_annotations
 }

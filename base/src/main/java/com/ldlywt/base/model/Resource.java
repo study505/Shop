@@ -3,9 +3,7 @@ package com.ldlywt.base.model;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-/**
- * @author Jenly <a href="mailto:jenly1314@gmail.com">Jenly</a>
- */
+
 public class Resource<T> {
 
     @Status

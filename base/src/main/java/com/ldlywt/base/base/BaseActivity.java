@@ -29,7 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        handIntent();
+        handleIntent();
         initView();
         initData();
     }
@@ -37,7 +37,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract @LayoutRes
     int getLayoutId();
 
-    protected void handIntent() {
+    protected void handleIntent() {
     }
 
     protected abstract void initView();

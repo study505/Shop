@@ -8,13 +8,20 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.ldlywt.base.base.AbsLifecycleActivity;
+import com.ldlywt.base.event.LiveDataBus;
 import com.ldlywt.fastdevandroid.R;
+import com.ldlywt.fastdevandroid.main.common.Constant;
 import com.ldlywt.fastdevandroid.main.vm.MainVm;
 
 public class MainActivity extends AbsLifecycleActivity<MainVm> implements View.OnClickListener {
 
     private Button mBtn;
     private TextView mTv;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
 
     @Override
     protected void initData() {
@@ -25,11 +32,13 @@ public class MainActivity extends AbsLifecycleActivity<MainVm> implements View.O
 //                mTv.setText(s);
 //            }
 //        });
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_main;
+        LiveDataBus.get().with(Constant.EVENT_KEY, String.class).observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                Log.i("wutao", "onChanged: " + s);
+                mTv.setText(s);
+            }
+        });
     }
 
     @Override
@@ -41,24 +50,19 @@ public class MainActivity extends AbsLifecycleActivity<MainVm> implements View.O
     }
 
     @Override
-    protected void dataObserver() {
-        super.dataObserver();
-
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             default:
                 break;
             case R.id.btn:
-                mViewModel.getArticleList("1", "1").observe(this, new Observer<String>() {
-                    @Override
-                    public void onChanged(@Nullable String s) {
-                        Log.i("wutao", "onChanged: " + s);
-                        mTv.setText(s);
-                    }
-                });
+//                mViewModel.getArticleList("1", "1").observe(this, new Observer<String>() {
+//                    @Override
+//                    public void onChanged(@Nullable String s) {
+//                        Log.i("wutao", "onChanged: " + s);
+//                        mTv.setText(s);
+//                    }
+//                });
+                mViewModel.getArticleList("1", "1");
                 break;
         }
     }

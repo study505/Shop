@@ -2,11 +2,11 @@ package com.ldlywt.fastdevandroid.main.source;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
-
 import com.ldlywt.base.base.AbsRepository;
+import com.ldlywt.base.event.LiveDataBus;
+import com.ldlywt.fastdevandroid.main.common.Constant;
 
 import java.io.IOException;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -36,13 +36,21 @@ public class DataRepository extends AbsRepository {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d("wutao", "onFailure: ");
-                liveData.postValue(e.getMessage());
+//                liveData.postValue(e.getMessage());
+                LiveDataBus.get().with(Constant.EVENT_KEY,String.class).postValue(e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d("wutao", "onResponse: " + response.body().string());
-                liveData.postValue(response.body().toString());
+                final String result = response.body().string();
+                Log.d("wutao", "onResponse: " + result);
+//                liveData.postValue(response.body().toString());
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        LiveDataBus.get().with(Constant.EVENT_KEY,String.class).postValue(result);
+                    }
+                }).start();
             }
         });
         return liveData;

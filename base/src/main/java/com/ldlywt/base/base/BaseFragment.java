@@ -18,8 +18,12 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
         rootView = inflater.inflate(getLayoutResId(), null, false);
+        handleIntent();
         initView(state);
         return rootView;
+    }
+
+    protected void handleIntent() {
     }
 
 
