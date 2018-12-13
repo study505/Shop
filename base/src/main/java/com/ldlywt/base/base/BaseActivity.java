@@ -1,6 +1,8 @@
 package com.ldlywt.base.base;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -23,7 +25,7 @@ import java.net.SocketTimeoutException;
  *     version: 1.0
  * </pre>
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements ICallback{
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,40 +33,42 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutId());
         handleIntent();
         initView();
-        initData();
+        initData(savedInstanceState);
     }
-
-    protected abstract @LayoutRes
-    int getLayoutId();
-
     protected void handleIntent() {
     }
 
-    protected abstract void initView();
-
-    protected abstract void initData();
 
     /**
-     * 跳转页面
-     *
-     * @param clz 所跳转的目的Activity类
+     * 获取一个 Context 对象
      */
-    public void startActivity(Class<?> clz) {
-        startActivity(new Intent(this, clz));
+    public Context getContext() {
+        return getBaseContext();
+    }
+
+
+    /**
+     * 获取当前 Activity 对象
+     */
+    public <A extends BaseActivity> A getActivity() {
+        return (A) this;
     }
 
     /**
-     * 跳转页面
-     *
-     * @param clz    所跳转的目的Activity类
-     * @param bundle 跳转所携带的信息
+     * 跳转到其他 Activity
+     * @param cls       目标Activity的Class
      */
-    public void startActivity(Class<?> clz, Bundle bundle) {
-        Intent intent = new Intent(this, clz);
-        if (bundle != null) {
-            intent.putExtras(bundle);
-        }
-        startActivity(intent);
+    public void startActivity(Class<? extends Activity> cls) {
+        startActivity(new Intent(this, cls));
+    }
+
+    /**
+     * 跳转到其他 Activity 并销毁当前 Activity
+     * @param cls       目标Activity的Class
+     */
+    public void startActivityFinish(Class<? extends Activity> cls) {
+        startActivity(cls);
+        finish();
     }
 
     public abstract class OnCallback<T> implements Resource.OnHandleCallback<T> {

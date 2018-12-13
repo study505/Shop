@@ -1,6 +1,7 @@
 package com.ldlywt.fastdevandroid.main.ui;
 
 import android.arch.lifecycle.Observer;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
@@ -19,12 +20,12 @@ public class MainActivity extends AbsLifecycleActivity<MainVm> implements View.O
     private TextView mTv;
 
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.activity_main;
     }
 
     @Override
-    protected void initData() {
+    public void initData(Bundle savedInstanceState) {
 //        mViewModel.getArticleList("1", "1").observe(this, new Observer<String>() {
 //            @Override
 //            public void onChanged(@Nullable String s) {

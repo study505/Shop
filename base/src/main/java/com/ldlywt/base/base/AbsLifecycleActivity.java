@@ -17,7 +17,7 @@ public abstract class AbsLifecycleActivity<T extends AbsViewModel> extends BaseA
     }
 
     @Override
-    protected void initView() {
+    public void initView() {
         mViewModel = VMProviders(this, (Class<T>) TUtil.getInstance(this, 0));
     }
 
