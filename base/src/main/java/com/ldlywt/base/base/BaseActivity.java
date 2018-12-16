@@ -8,10 +8,13 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.ldlywt.base.R;
 import com.ldlywt.base.model.Resource;
+import com.ldlywt.base.pagestate.XPageStateView;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -27,11 +30,20 @@ import java.net.SocketTimeoutException;
  */
 public abstract class BaseActivity extends AppCompatActivity implements ICallback{
 
+    protected XPageStateView mPageStateView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         handleIntent();
+        mPageStateView = XPageStateView.wrap(this);
+        mPageStateView.setOnRetryClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ToastUtils.showShort("重新请求");
+            }
+        });
         initView();
         initData(savedInstanceState);
     }
@@ -69,6 +81,27 @@ public abstract class BaseActivity extends AppCompatActivity implements ICallbac
     public void startActivityFinish(Class<? extends Activity> cls) {
         startActivity(cls);
         finish();
+    }
+
+
+    protected void showEmptyView() {
+        mPageStateView.showEmpty();
+    }
+
+    protected void showErrorView() {
+        mPageStateView.showError();
+    }
+
+    protected void showLoadingView() {
+        mPageStateView.showLoading();
+    }
+
+    protected void showNoNetView() {
+        mPageStateView.showNoNetwork();
+    }
+
+    protected void showContentView() {
+        mPageStateView.showContent();
     }
 
     public abstract class OnCallback<T> implements Resource.OnHandleCallback<T> {

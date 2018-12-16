@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 import com.ldlywt.base.base.AbsRepository;
 import com.ldlywt.base.event.LiveDataBus;
+import com.ldlywt.base.pagestate.StateConstants;
 import com.ldlywt.fastdevandroid.main.common.Constant;
 
 import java.io.IOException;
@@ -48,7 +49,8 @@ public class DataRepository extends AbsRepository {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        LiveDataBus.get().with(Constant.EVENT_KEY,String.class).postValue(result);
+                        LiveDataBus.get().with(Constant.PAGE_STATE).postValue(StateConstants.NET_WORK_STATE);
+//                        LiveDataBus.get().with(Constant.EVENT_KEY,String.class).postValue(result);
                     }
                 }).start();
             }

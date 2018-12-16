@@ -10,5 +10,5 @@ package com.ldlywt.fastdevandroid.main.common;
 public class Constant {
 
     public static final String EVENT_KEY = "EVENT_KEY";
-    public static final String EVENT_KEY_2 = "EVENT_KEY2";
+    public static final String PAGE_STATE = "PAGE_STATE";
 }

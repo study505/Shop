@@ -40,10 +40,12 @@ public class MainActivity extends AbsLifecycleActivity<MainVm> implements View.O
                 mTv.setText(s);
             }
         });
+
+        LiveDataBus.get().with(Constant.PAGE_STATE).observe(this, pageStateObserver);
     }
 
     @Override
-    protected void initView() {
+    public void initView() {
         super.initView();
         mBtn = (Button) findViewById(R.id.btn);
         mBtn.setOnClickListener(this);

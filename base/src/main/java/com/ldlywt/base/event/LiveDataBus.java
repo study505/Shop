@@ -101,7 +101,7 @@ public final class LiveDataBus {
             if (needChangeState) {
                 //把LifecycleOwner的状态改为INITIALIZED
                 setLifecycleState(lifecycle, Lifecycle.State.INITIALIZED);
-                //set observerSize to -1，否则super.observe(owner, observer)的时候会无限循环
+                //set observerSize to -1，否则super.observe(owner, pageStateObserver)的时候会无限循环
                 setLifecycleObserverMapSize(lifecycle, -1);
             }
             super.observe(owner, observer);

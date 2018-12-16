@@ -2,6 +2,8 @@ package com.ldlywt.base;
 
 import android.app.Application;
 
+import com.ldlywt.base.pagestate.XPageStateView;
+
 
 /**
  * <pre>
@@ -14,14 +16,16 @@ import android.app.Application;
  */
 public class BaseApp extends Application {
 
-    private static BaseApp sMBaseApp = null;
+    private static BaseApp sApp = null;
 
     public static BaseApp getApp() {
-        return sMBaseApp;
+        return sApp;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        sApp = this;
+        XPageStateView.init();
     }
 }
