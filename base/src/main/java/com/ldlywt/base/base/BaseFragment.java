@@ -1,5 +1,6 @@
 package com.ldlywt.base.base;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,10 +12,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public abstract class BaseFragment extends Fragment implements ICallback {
+import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.ToastUtils;
+import com.ldlywt.base.R;
+import com.ldlywt.base.model.Resource;
+import com.ldlywt.base.pagestate.XPageStateView;
+
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+
+public abstract class BaseFragment extends Fragment implements IUiCallback {
     protected FragmentActivity activity;
     protected boolean mIsFirstVisible = true;
-    private View rootView;
+    protected XPageStateView mPageStateView;
 
     @Override
     public void onHiddenChanged(boolean hidden) {
@@ -54,10 +64,20 @@ public abstract class BaseFragment extends Fragment implements ICallback {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initPageState();
         handleIntent();
         initView();
         needLazy();
         initData(savedInstanceState);
+    }
+
+    private void initPageState() {
+        mPageStateView = XPageStateView.wrap(this);
+        mPageStateView.setOnRetryClickListener(view -> retryClick());
+    }
+
+    protected void retryClick() {
+        ToastUtils.showShort("重新请求");
     }
 
     @Override
@@ -107,9 +127,29 @@ public abstract class BaseFragment extends Fragment implements ICallback {
 
     }
 
-    @SuppressWarnings("unchecked")
-    protected <T extends View> T getViewById(int id) {
-        return (T) rootView.findViewById(id);
+    @Override
+    public void showEmptyView() {
+        mPageStateView.showEmpty();
+    }
+
+    @Override
+    public void showErrorView() {
+        mPageStateView.showError();
+    }
+
+    @Override
+    public void showLoadingView() {
+        mPageStateView.showLoading();
+    }
+
+    @Override
+    public void showNoNetView() {
+        mPageStateView.showNoNetwork();
+    }
+
+    @Override
+    public void showContentView() {
+        mPageStateView.showContent();
     }
 
     /**
@@ -129,5 +169,39 @@ public abstract class BaseFragment extends Fragment implements ICallback {
      */
     public void startActivity(Class<? extends Activity> cls) {
         startActivity(new Intent(getContext(), cls));
+    }
+
+    public abstract class OnCallback<T> implements Resource.OnHandleCallback<T> {
+
+        @Override
+        public void onLoading() {
+
+        }
+
+        @Override
+        public void onFailure(String msg) {
+            ToastUtils.showShort(msg);
+        }
+
+        @SuppressLint("MissingPermission")
+        @Override
+        public void onError(Throwable e) {
+            if (!NetworkUtils.isConnected()) {
+                ToastUtils.showShort(R.string.result_network_unavailable_error);
+                return;
+            }
+            if (e instanceof ConnectException) {
+                ToastUtils.showShort(R.string.result_connect_failed_error);
+            } else if (e instanceof SocketTimeoutException) {
+                ToastUtils.showShort(R.string.result_connect_timeout_error);
+            } else {
+                ToastUtils.showShort(R.string.result_empty_error);
+            }
+        }
+
+        @Override
+        public void onCompleted() {
+
+        }
     }
 }

@@ -15,4 +15,5 @@ public class StateConstants {
     public static final String LOADING_STATE = "LOADING_STATE";
     public static final String SUCCESS_STATE = "SUCCESS_STATE";
     public static final String EMPTY_STATE = "EMPTY_STATE";
+    public static final String PAGE_STATE = "PAGE_STATE";
 }

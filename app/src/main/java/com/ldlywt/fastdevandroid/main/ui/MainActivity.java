@@ -8,13 +8,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.ldlywt.base.base.AbsLifecycleActivity;
+import com.ldlywt.base.base.AbsMvvmActivity;
 import com.ldlywt.base.event.LiveDataBus;
 import com.ldlywt.fastdevandroid.R;
 import com.ldlywt.fastdevandroid.main.common.Constant;
 import com.ldlywt.fastdevandroid.main.vm.MainVm;
 
-public class MainActivity extends AbsLifecycleActivity<MainVm> implements View.OnClickListener {
+public class MainActivity extends AbsMvvmActivity<MainVm> implements View.OnClickListener {
 
     private Button mBtn;
     private TextView mTv;
@@ -41,7 +41,6 @@ public class MainActivity extends AbsLifecycleActivity<MainVm> implements View.O
             }
         });
 
-        LiveDataBus.get().with(Constant.PAGE_STATE).observe(this, pageStateObserver);
     }
 
     @Override

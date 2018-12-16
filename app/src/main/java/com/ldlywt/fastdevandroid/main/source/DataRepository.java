@@ -49,7 +49,7 @@ public class DataRepository extends AbsRepository {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        LiveDataBus.get().with(Constant.PAGE_STATE).postValue(StateConstants.NET_WORK_STATE);
+                        LiveDataBus.get().with(StateConstants.PAGE_STATE).postValue(StateConstants.NET_WORK_STATE);
 //                        LiveDataBus.get().with(Constant.EVENT_KEY,String.class).postValue(result);
                     }
                 }).start();

@@ -5,10 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -28,7 +26,7 @@ import java.net.SocketTimeoutException;
  *     version: 1.0
  * </pre>
  */
-public abstract class BaseActivity extends AppCompatActivity implements ICallback{
+public abstract class BaseActivity extends AppCompatActivity implements IUiCallback {
 
     protected XPageStateView mPageStateView;
 
@@ -37,19 +35,22 @@ public abstract class BaseActivity extends AppCompatActivity implements ICallbac
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         handleIntent();
-        mPageStateView = XPageStateView.wrap(this);
-        mPageStateView.setOnRetryClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ToastUtils.showShort("重新请求");
-            }
-        });
+        initPageState();
         initView();
         initData(savedInstanceState);
     }
+
+    private void initPageState() {
+        mPageStateView = XPageStateView.wrap(this);
+        mPageStateView.setOnRetryClickListener(view -> retryClick());
+    }
+
     protected void handleIntent() {
     }
 
+    protected void retryClick() {
+        ToastUtils.showShort("重新请求");
+    }
 
     /**
      * 获取一个 Context 对象
@@ -68,7 +69,8 @@ public abstract class BaseActivity extends AppCompatActivity implements ICallbac
 
     /**
      * 跳转到其他 Activity
-     * @param cls       目标Activity的Class
+     *
+     * @param cls 目标Activity的Class
      */
     public void startActivity(Class<? extends Activity> cls) {
         startActivity(new Intent(this, cls));
@@ -76,7 +78,8 @@ public abstract class BaseActivity extends AppCompatActivity implements ICallbac
 
     /**
      * 跳转到其他 Activity 并销毁当前 Activity
-     * @param cls       目标Activity的Class
+     *
+     * @param cls 目标Activity的Class
      */
     public void startActivityFinish(Class<? extends Activity> cls) {
         startActivity(cls);
@@ -84,23 +87,28 @@ public abstract class BaseActivity extends AppCompatActivity implements ICallbac
     }
 
 
-    protected void showEmptyView() {
+    @Override
+    public void showEmptyView() {
         mPageStateView.showEmpty();
     }
 
-    protected void showErrorView() {
+    @Override
+    public void showErrorView() {
         mPageStateView.showError();
     }
 
-    protected void showLoadingView() {
+    @Override
+    public void showLoadingView() {
         mPageStateView.showLoading();
     }
 
-    protected void showNoNetView() {
+    @Override
+    public void showNoNetView() {
         mPageStateView.showNoNetwork();
     }
 
-    protected void showContentView() {
+    @Override
+    public void showContentView() {
         mPageStateView.showContent();
     }
 
