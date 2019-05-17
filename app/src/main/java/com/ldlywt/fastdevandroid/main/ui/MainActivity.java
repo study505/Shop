@@ -26,13 +26,6 @@ public class MainActivity extends AbsMvvmActivity<MainVm> implements View.OnClic
 
     @Override
     public void initData(Bundle savedInstanceState) {
-//        mViewModel.getArticleList("1", "1").observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                Log.i("wutao", "onChanged: " + s);
-//                mTv.setText(s);
-//            }
-//        });
         LiveEventBus.get().with(Constant.EVENT_KEY, String.class).observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
@@ -57,13 +50,6 @@ public class MainActivity extends AbsMvvmActivity<MainVm> implements View.OnClic
             default:
                 break;
             case R.id.btn:
-//                mViewModel.getArticleList("1", "1").observe(this, new Observer<String>() {
-//                    @Override
-//                    public void onChanged(@Nullable String s) {
-//                        Log.i("wutao", "onChanged: " + s);
-//                        mTv.setText(s);
-//                    }
-//                });
                 mViewModel.getArticleList("1", "1");
                 break;
         }

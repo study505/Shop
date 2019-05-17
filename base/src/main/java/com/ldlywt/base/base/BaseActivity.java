@@ -1,21 +1,25 @@
 package com.ldlywt.base.base;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.ldlywt.base.R;
-import com.ldlywt.base.model.Resource;
-import com.ldlywt.base.pagestate.XPageStateView;
-
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
+import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.kingja.loadsir.callback.Callback;
+import com.kingja.loadsir.callback.SuccessCallback;
+import com.kingja.loadsir.core.Convertor;
+import com.kingja.loadsir.core.LoadService;
+import com.kingja.loadsir.core.LoadSir;
+import com.ldlywt.base.bean.HttpResult;
+import com.ldlywt.base.pagestate.EmptyCallback;
+import com.ldlywt.base.pagestate.ErrorCallback;
+import com.ldlywt.base.pagestate.LoadingCallback;
+import com.ldlywt.base.util.Constant;
 
 /**
  * <pre>
@@ -28,25 +32,49 @@ import java.net.SocketTimeoutException;
  */
 public abstract class BaseActivity extends AppCompatActivity implements IUiCallback {
 
-    protected XPageStateView mPageStateView;
+
+    private LoadService loadService;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         handleIntent();
-        initPageState();
         initView();
         initData(savedInstanceState);
-    }
-
-    private void initPageState() {
-        mPageStateView = XPageStateView.wrap(this);
-        mPageStateView.setOnRetryClickListener(view -> retryClick());
+        registerPageState();
+        LiveEventBus.get().with(Constant.PAGE_STATE,HttpResult.class).observe(this,
+                httpResult -> loadService.showWithConvertor(httpResult));
     }
 
     protected void handleIntent() {
     }
+
+    private void registerPageState() {
+        loadService = LoadSir.getDefault().register(this, (Callback.OnReloadListener) v -> {
+            loadService.showCallback(LoadingCallback.class);
+            retryClick();
+        }, (Convertor<HttpResult>) httpResult -> {
+            Class<? extends Callback> resultCode;
+            switch (httpResult.getErrorCode()) {
+                case HttpResult.SUCCESS_CODE:
+                    if (httpResult.getData() != null) {
+                        resultCode = SuccessCallback.class;
+                    } else {
+                        resultCode = EmptyCallback.class;
+                    }
+                    break;
+                case HttpResult.ERROR_CODE:
+                    resultCode = ErrorCallback.class;
+                    break;
+                default:
+                    resultCode = ErrorCallback.class;
+            }
+            return resultCode;
+        });
+    }
+
+
 
     protected void retryClick() {
         ToastUtils.showShort("重新请求");
@@ -68,15 +96,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IUiCallb
     }
 
     /**
-     * 跳转到其他 Activity
-     *
-     * @param cls 目标Activity的Class
-     */
-    public void startActivity(Class<? extends Activity> cls) {
-        startActivity(new Intent(this, cls));
-    }
-
-    /**
      * 跳转到其他 Activity 并销毁当前 Activity
      *
      * @param cls 目标Activity的Class
@@ -86,64 +105,33 @@ public abstract class BaseActivity extends AppCompatActivity implements IUiCallb
         finish();
     }
 
+    /**
+     * 跳转到其他 Activity
+     *
+     * @param cls 目标Activity的Class
+     */
+    public void startActivity(Class<? extends Activity> cls) {
+        startActivity(new Intent(this, cls));
+    }
 
     @Override
     public void showEmptyView() {
-        mPageStateView.showEmpty();
     }
 
     @Override
     public void showErrorView() {
-        mPageStateView.showError();
     }
 
     @Override
     public void showLoadingView() {
-        mPageStateView.showLoading();
     }
 
     @Override
     public void showNoNetView() {
-        mPageStateView.showNoNetwork();
     }
 
     @Override
     public void showContentView() {
-        mPageStateView.showContent();
-    }
-
-    public abstract class OnCallback<T> implements Resource.OnHandleCallback<T> {
-
-        @Override
-        public void onLoading() {
-
-        }
-
-        @Override
-        public void onFailure(String msg) {
-            ToastUtils.showShort(msg);
-        }
-
-        @SuppressLint("MissingPermission")
-        @Override
-        public void onError(Throwable e) {
-            if (!NetworkUtils.isConnected()) {
-                ToastUtils.showShort(R.string.result_network_unavailable_error);
-                return;
-            }
-            if (e instanceof ConnectException) {
-                ToastUtils.showShort(R.string.result_connect_failed_error);
-            } else if (e instanceof SocketTimeoutException) {
-                ToastUtils.showShort(R.string.result_connect_timeout_error);
-            } else {
-                ToastUtils.showShort(R.string.result_empty_error);
-            }
-        }
-
-        @Override
-        public void onCompleted() {
-
-        }
     }
 
 }

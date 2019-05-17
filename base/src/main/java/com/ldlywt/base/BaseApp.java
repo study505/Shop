@@ -2,8 +2,12 @@ package com.ldlywt.base;
 
 import android.app.Application;
 
-import com.ldlywt.base.pagestate.XPageStateView;
-
+import com.kingja.loadsir.callback.SuccessCallback;
+import com.kingja.loadsir.core.LoadSir;
+import com.ldlywt.base.pagestate.EmptyCallback;
+import com.ldlywt.base.pagestate.ErrorCallback;
+import com.ldlywt.base.pagestate.LoadingCallback;
+import com.ldlywt.base.pagestate.TimeoutCallback;
 
 /**
  * <pre>
@@ -26,6 +30,12 @@ public class BaseApp extends Application {
     public void onCreate() {
         super.onCreate();
         sApp = this;
-        XPageStateView.init();
+        LoadSir.beginBuilder()
+                .addCallback(new ErrorCallback())//添加各种状态页
+                .addCallback(new EmptyCallback())
+                .addCallback(new LoadingCallback())
+                .addCallback(new TimeoutCallback())
+                .setDefaultCallback(SuccessCallback.class)//设置默认状态页
+                .commit();
     }
 }

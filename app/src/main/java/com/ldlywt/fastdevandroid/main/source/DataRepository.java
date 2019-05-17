@@ -5,10 +5,13 @@ import android.util.Log;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.ldlywt.base.base.AbsRepository;
-import com.ldlywt.base.pagestate.StateConstants;
-import com.ldlywt.fastdevandroid.main.common.Constant;
+import com.ldlywt.base.bean.HttpResult;
+import com.ldlywt.base.util.Constant;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -24,7 +27,7 @@ import okhttp3.Response;
  */
 public class DataRepository extends AbsRepository {
 
-    String url = "http://www.wanandroid.com/banner/json";
+    String url = "https://www.wanandroid.com/banner/json";
 
     public MutableLiveData<String> loadArticleRemList(final String lectureLevel, final String lastId, final String rn){
         final MutableLiveData<String> liveData = new MutableLiveData<>();
@@ -38,8 +41,9 @@ public class DataRepository extends AbsRepository {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d("wutao", "onFailure: ");
+                e.printStackTrace();
 //                liveData.postValue(e.getMessage());
-                LiveEventBus.get().with(Constant.EVENT_KEY,String.class).post(e.getMessage());
+                LiveEventBus.get().with(Constant.PAGE_STATE,HttpResult.class).post(new HttpResult(HttpResult.ERROR_CODE, ""));
             }
 
             @Override
@@ -50,8 +54,7 @@ public class DataRepository extends AbsRepository {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        LiveEventBus.get().with(StateConstants.PAGE_STATE).post(StateConstants.NET_WORK_STATE);
-//                        LiveDataBus.get().with(Constant.EVENT_KEY,String.class).postValue(result);
+                        LiveEventBus.get().with(Constant.PAGE_STATE,HttpResult.class).post(new HttpResult(HttpResult.SUCCESS_CODE,"FDSFS"));
                     }
                 }).start();
             }
