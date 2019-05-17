@@ -1,8 +1,5 @@
 package com.ldlywt.base.model;
 
-/**
- * @author Jenly <a href="mailto:jenly1314@gmail.com">Jenly</a>
- */
 public class BasePageBean<T> {
     private int curPage;
 

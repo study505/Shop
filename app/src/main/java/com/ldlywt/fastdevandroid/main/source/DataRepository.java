@@ -2,8 +2,9 @@ package com.ldlywt.fastdevandroid.main.source;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
+
+import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.ldlywt.base.base.AbsRepository;
-import com.ldlywt.base.event.LiveDataBus;
 import com.ldlywt.base.pagestate.StateConstants;
 import com.ldlywt.fastdevandroid.main.common.Constant;
 
@@ -38,7 +39,7 @@ public class DataRepository extends AbsRepository {
             public void onFailure(Call call, IOException e) {
                 Log.d("wutao", "onFailure: ");
 //                liveData.postValue(e.getMessage());
-                LiveDataBus.get().with(Constant.EVENT_KEY,String.class).postValue(e.getMessage());
+                LiveEventBus.get().with(Constant.EVENT_KEY,String.class).post(e.getMessage());
             }
 
             @Override
@@ -49,7 +50,7 @@ public class DataRepository extends AbsRepository {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        LiveDataBus.get().with(StateConstants.PAGE_STATE).postValue(StateConstants.NET_WORK_STATE);
+                        LiveEventBus.get().with(StateConstants.PAGE_STATE).post(StateConstants.NET_WORK_STATE);
 //                        LiveDataBus.get().with(Constant.EVENT_KEY,String.class).postValue(result);
                     }
                 }).start();

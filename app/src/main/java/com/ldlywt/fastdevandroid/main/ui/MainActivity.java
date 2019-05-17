@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.ldlywt.base.base.AbsMvvmActivity;
-import com.ldlywt.base.event.LiveDataBus;
 import com.ldlywt.fastdevandroid.R;
 import com.ldlywt.fastdevandroid.main.common.Constant;
 import com.ldlywt.fastdevandroid.main.vm.MainVm;
@@ -33,7 +33,7 @@ public class MainActivity extends AbsMvvmActivity<MainVm> implements View.OnClic
 //                mTv.setText(s);
 //            }
 //        });
-        LiveDataBus.get().with(Constant.EVENT_KEY, String.class).observe(this, new Observer<String>() {
+        LiveEventBus.get().with(Constant.EVENT_KEY, String.class).observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 Log.i("wutao", "onChanged: " + s);

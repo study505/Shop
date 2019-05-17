@@ -1,13 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion var.android.compileSdkVersion
+    compileSdkVersion var.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion var.android.defaultConfig.minSdkVersion
-        targetSdkVersion var.android.defaultConfig.targetSdkVersion
-        versionCode var.android.defaultConfig.versionCode
-        versionName var.android.defaultConfig.versionName
+        minSdkVersion var.minSdkVersion
+        targetSdkVersion var.targetSdkVersion
+        versionCode var.versionCode
+        versionName var.versionName
     }
 
     compileOptions {
@@ -17,14 +17,24 @@ android {
 }
 
 dependencies {
-    api var.dependencies.appcompat_v7
-    api var.dependencies.lifecycle_extensions
-    annotationProcessor var.dependencies.lifecycle_compiler
-    api var.dependencies.rxjava2
-    api var.dependencies.rxandroid
-    api var.dependencies.retrofit
-    api var.dependencies.converter_gson
-    api var.dependencies.adapter_rxjava
-    api var.dependencies.okhttp_log
-    api var.dependencies.utilcode
+    api "com.android.support:appcompat-v7:$var.supportLibraryVersion"
+    api "com.android.support:recyclerview-v7:$var.supportLibraryVersion"
+    api 'com.android.support.constraint:constraint-layout:1.1.3'
+    api "android.arch.lifecycle:common-java8:1.1.1"
+    api "io.reactivex.rxjava2:rxjava:2.1.7"
+    api "io.reactivex.rxjava2:rxandroid:2.0.1"
+    api "com.squareup.retrofit2:retrofit:2.2.0"
+    api "com.squareup.retrofit2:converter-gson:2.2.0"
+    api "com.squareup.retrofit2:adapter-rxjava2:2.2.0"
+    api "com.squareup.okhttp3:okhttp:3.12.0"
+    api "com.squareup.okhttp3:logging-interceptor:3.12.0"
+    api "com.blankj:utilcode:1.20.0"
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
+    api "com.timmy.tdialog:tdialog:2.1.1"
+    api 'com.jeremyliao:live-event-bus:1.4.2'
+    api 'com.kingja.loadsir:loadsir:1.3.6'
+    api 'com.gyf.immersionbar:immersionbar:2.3.3-beta15'
+    api 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+
 }
