@@ -8,10 +8,11 @@ import com.kingja.loadsir.callback.Callback;
 import com.ldlywt.base.R;
 
 /**
- * Description:TODO
- * Create Time:2017/9/2 16:17
- * Author:KingJA
- * Email:kingjavip@gmail.com
+ * author : wutao
+ * e-mail : 670831931@qq.com
+ * time   : 2019/05/17
+ * desc   :
+ * version: 1.0
  */
 
 public class TimeoutCallback extends Callback {

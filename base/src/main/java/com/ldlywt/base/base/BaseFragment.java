@@ -14,7 +14,13 @@ import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.ToastUtils;
 
-
+/**
+ * author : wutao
+ * e-mail : 670831931@qq.com
+ * time   : 2019/05/17
+ * desc   :
+ * version: 1.0
+ */
 public abstract class BaseFragment extends Fragment implements IUiCallback {
     protected FragmentActivity activity;
     protected boolean mIsFirstVisible = true;

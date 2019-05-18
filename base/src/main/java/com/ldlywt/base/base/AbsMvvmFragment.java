@@ -5,7 +5,13 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.NonNull;
 import com.ldlywt.base.util.TUtil;
 
-
+/**
+ * author : wutao
+ * e-mail : 670831931@qq.com
+ * time   : 2019/05/17
+ * desc   :
+ * version: 1.0
+ */
 public abstract class AbsMvvmFragment<T extends AbsViewModel> extends BaseFragment {
 
     protected T mViewModel;

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.gyf.immersionbar.ImmersionBar;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.kingja.loadsir.callback.Callback;
 import com.kingja.loadsir.callback.SuccessCallback;
@@ -38,12 +39,19 @@ public abstract class BaseActivity extends AppCompatActivity implements IUiCallb
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
+        setStatusBar();
         handleIntent();
         initView();
         initData(savedInstanceState);
         registerPageState();
         LiveEventBus.get().with(Constant.PAGE_STATE, BaseResult.class).observe(this,
                 httpResult -> loadService.showWithConvertor(httpResult));
+    }
+
+    protected void setStatusBar() {
+        ImmersionBar.with(this)
+                .transparentStatusBar()
+                .init();
     }
 
     protected void handleIntent() {

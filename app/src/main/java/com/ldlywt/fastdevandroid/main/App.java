@@ -5,11 +5,11 @@ import com.ldlywt.base.BaseApp;
 import com.zhouyou.http.EasyHttp;
 
 /**
- * <pre>
- *     author : wutao
- *     time   : 2018/12/11
- *     desc   :
- * </pre>
+ * author : wutao
+ * e-mail : 670831931@qq.com
+ * time   : 2019/05/17
+ * desc   :
+ * version: 1.0
  */
 public class App extends BaseApp {
     @Override

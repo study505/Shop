@@ -10,13 +10,11 @@ import com.ldlywt.base.pagestate.LoadingCallback;
 import com.ldlywt.base.pagestate.TimeoutCallback;
 
 /**
- * <pre>
- *     author : wutao
- *     e-mail : ldlywt@163.com
- *     time   : 2018/12/07
- *     desc   :
- *     version: 1.0
- * </pre>
+ * author : wutao
+ * e-mail : 670831931@qq.com
+ * time   : 2019/05/17
+ * desc   :
+ * version: 1.0
  */
 public class BaseApp extends Application {
 

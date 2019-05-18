@@ -12,13 +12,11 @@ import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 
 /**
- * <pre>
- *     @author : wutao
- *     e-mail : wutao@himango.cn
- *     time   : 2019/05/18
- *     desc   :
- *     version: 1.0
- * </pre>
+ * author : wutao
+ * e-mail : 670831931@qq.com
+ * time   : 2019/05/17
+ * desc   :
+ * version: 1.0
  */
 public class CustomGetRequest extends GetRequest {
 

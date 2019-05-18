@@ -6,12 +6,12 @@ import com.ldlywt.base.R;
 
 
 /**
- * Description:TODO
- * Create Time:2017/9/4 10:20
- * Author:KingJA
- * Email:kingjavip@gmail.com
+ * author : wutao
+ * e-mail : 670831931@qq.com
+ * time   : 2019/05/17
+ * desc   :
+ * version: 1.0
  */
-
 public class ErrorCallback extends Callback {
     @Override
     protected int onCreateView() {

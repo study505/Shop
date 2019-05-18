@@ -2,7 +2,7 @@ package com.ldlywt.base.util;
 
 /**
  * author : wutao
- * e-mail : wutao@himango.cn
+ * e-mail : 670831931@qq.com
  * time   : 2019/05/17
  * desc   :
  * version: 1.0
