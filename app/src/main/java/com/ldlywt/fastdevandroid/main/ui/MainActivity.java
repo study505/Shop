@@ -11,8 +11,11 @@ import android.widget.TextView;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.ldlywt.base.base.AbsMvvmActivity;
 import com.ldlywt.fastdevandroid.R;
-import com.ldlywt.fastdevandroid.main.common.Constant;
+import com.ldlywt.fastdevandroid.main.bean.BannerBean;
+import com.ldlywt.fastdevandroid.main.common.GlobalConstant;
 import com.ldlywt.fastdevandroid.main.vm.MainVm;
+
+import java.util.List;
 
 public class MainActivity extends AbsMvvmActivity<MainVm> implements View.OnClickListener {
 
@@ -26,12 +29,8 @@ public class MainActivity extends AbsMvvmActivity<MainVm> implements View.OnClic
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        LiveEventBus.get().with(Constant.EVENT_KEY, String.class).observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                Log.i("wutao", "onChanged: " + s);
-                mTv.setText(s);
-            }
+        LiveEventBus.get().with(GlobalConstant.EVENT_KEY, List.class).observe(this, list -> {
+            mTv.setText(list.toString());
         });
 
     }
@@ -50,7 +49,7 @@ public class MainActivity extends AbsMvvmActivity<MainVm> implements View.OnClic
             default:
                 break;
             case R.id.btn:
-                mViewModel.getArticleList("1", "1");
+                mViewModel.getArticleList();
                 break;
         }
     }

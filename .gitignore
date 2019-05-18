@@ -12,3 +12,6 @@
 .idea/caches/gradle_models.ser
 .idea/encodings.xml
 .idea/vcs.xml
+.idea/codeStyles/
+libs/
+src/main/res/drawable/

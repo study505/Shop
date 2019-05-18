@@ -7,7 +7,7 @@ package com.ldlywt.fastdevandroid.main.common;
  *     desc   :
  * </pre>
  */
-public class Constant {
+public class GlobalConstant {
 
     public static final String EVENT_KEY = "EVENT_KEY";
 }

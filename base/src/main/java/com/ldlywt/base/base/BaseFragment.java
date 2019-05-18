@@ -12,13 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.bumptech.glide.load.engine.Resource;
-import com.ldlywt.base.R;
 
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
 
 public abstract class BaseFragment extends Fragment implements IUiCallback {
     protected FragmentActivity activity;
@@ -117,31 +112,6 @@ public abstract class BaseFragment extends Fragment implements IUiCallback {
      * 数据懒加载
      */
     protected void lazyLoad() {
-
-    }
-
-    @Override
-    public void showEmptyView() {
-
-    }
-
-    @Override
-    public void showErrorView() {
-
-    }
-
-    @Override
-    public void showLoadingView() {
-
-    }
-
-    @Override
-    public void showNoNetView() {
-
-    }
-
-    @Override
-    public void showContentView() {
 
     }
 

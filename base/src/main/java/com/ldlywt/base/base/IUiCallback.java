@@ -10,14 +10,4 @@ public interface IUiCallback {
     void initData(Bundle savedInstanceState);
     //初始化布局文件
     void initView();
-
-    void showEmptyView();
-
-    void showErrorView();
-
-    void showLoadingView();
-
-    void showNoNetView();
-
-    void showContentView();
 }

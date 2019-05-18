@@ -1,7 +1,6 @@
 package com.ldlywt.base.base;
 
 import android.app.Activity;
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +14,7 @@ import com.kingja.loadsir.callback.SuccessCallback;
 import com.kingja.loadsir.core.Convertor;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
-import com.ldlywt.base.bean.HttpResult;
+import com.ldlywt.base.bean.BaseResult;
 import com.ldlywt.base.pagestate.EmptyCallback;
 import com.ldlywt.base.pagestate.ErrorCallback;
 import com.ldlywt.base.pagestate.LoadingCallback;
@@ -43,7 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IUiCallb
         initView();
         initData(savedInstanceState);
         registerPageState();
-        LiveEventBus.get().with(Constant.PAGE_STATE,HttpResult.class).observe(this,
+        LiveEventBus.get().with(Constant.PAGE_STATE, BaseResult.class).observe(this,
                 httpResult -> loadService.showWithConvertor(httpResult));
     }
 
@@ -54,17 +53,17 @@ public abstract class BaseActivity extends AppCompatActivity implements IUiCallb
         loadService = LoadSir.getDefault().register(this, (Callback.OnReloadListener) v -> {
             loadService.showCallback(LoadingCallback.class);
             retryClick();
-        }, (Convertor<HttpResult>) httpResult -> {
+        }, (Convertor<BaseResult>) httpResult -> {
             Class<? extends Callback> resultCode;
-            switch (httpResult.getErrorCode()) {
-                case HttpResult.SUCCESS_CODE:
+            switch (httpResult.getCode()) {
+                case BaseResult.SUCCESS_CODE:
                     if (httpResult.getData() != null) {
                         resultCode = SuccessCallback.class;
                     } else {
                         resultCode = EmptyCallback.class;
                     }
                     break;
-                case HttpResult.ERROR_CODE:
+                case BaseResult.ERROR_CODE:
                     resultCode = ErrorCallback.class;
                     break;
                 default:
@@ -97,8 +96,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IUiCallb
 
     /**
      * 跳转到其他 Activity 并销毁当前 Activity
-     *
-     * @param cls 目标Activity的Class
      */
     public void startActivityFinish(Class<? extends Activity> cls) {
         startActivity(cls);
@@ -107,31 +104,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IUiCallb
 
     /**
      * 跳转到其他 Activity
-     *
-     * @param cls 目标Activity的Class
      */
     public void startActivity(Class<? extends Activity> cls) {
         startActivity(new Intent(this, cls));
     }
-
-    @Override
-    public void showEmptyView() {
-    }
-
-    @Override
-    public void showErrorView() {
-    }
-
-    @Override
-    public void showLoadingView() {
-    }
-
-    @Override
-    public void showNoNetView() {
-    }
-
-    @Override
-    public void showContentView() {
-    }
-
 }
